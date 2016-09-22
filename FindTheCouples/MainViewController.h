@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BoardViewController.h"
 
 @interface MainViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 {

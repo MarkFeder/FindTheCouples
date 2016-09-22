@@ -16,7 +16,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Override point for customization after application
+    
+    [UIApplication sharedApplication].statusBarHidden = YES;
     
     // Set navigationController as the main controller for the application
     
@@ -24,9 +26,11 @@
     
     self.mainController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:_mainController];
+    self.navigationController.navigationBar.hidden = YES;
     
     self.window.rootViewController = _navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
+    
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -58,6 +62,5 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 
 @end

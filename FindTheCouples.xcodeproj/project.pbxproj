@@ -12,6 +12,8 @@
 		4D30D09C1D94596700322976 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D30D09B1D94596700322976 /* MainViewController.m */; };
 		4D30D0A11D94596700322976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D30D0A01D94596700322976 /* Assets.xcassets */; };
 		4D30D0AD1D945A8200322976 /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D30D0AC1D945A8200322976 /* MainView.xib */; };
+		4D91B8971D947FA900E2E4F1 /* BoardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D91B8961D947FA900E2E4F1 /* BoardView.xib */; };
+		4D91B89C1D94804800E2E4F1 /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D91B89B1D94804700E2E4F1 /* BoardViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,9 @@
 		4D30D0A01D94596700322976 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D30D0A51D94596700322976 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D30D0AC1D945A8200322976 /* MainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
+		4D91B8961D947FA900E2E4F1 /* BoardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoardView.xib; sourceTree = "<group>"; };
+		4D91B89A1D94804700E2E4F1 /* BoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardViewController.h; sourceTree = "<group>"; };
+		4D91B89B1D94804700E2E4F1 /* BoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,7 @@
 		4D30D0931D94596700322976 /* FindTheCouples */ = {
 			isa = PBXGroup;
 			children = (
+				4D91B8981D947FB300E2E4F1 /* Xibs */,
 				4D30D0AB1D945A3F00322976 /* ViewControllers */,
 				4D30D0971D94596700322976 /* AppDelegate.h */,
 				4D30D0981D94596700322976 /* AppDelegate.m */,
@@ -77,11 +83,21 @@
 		4D30D0AB1D945A3F00322976 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				4D30D0AC1D945A8200322976 /* MainView.xib */,
 				4D30D09A1D94596700322976 /* MainViewController.h */,
 				4D30D09B1D94596700322976 /* MainViewController.m */,
+				4D91B89A1D94804700E2E4F1 /* BoardViewController.h */,
+				4D91B89B1D94804700E2E4F1 /* BoardViewController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4D91B8981D947FB300E2E4F1 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				4D30D0AC1D945A8200322976 /* MainView.xib */,
+				4D91B8961D947FA900E2E4F1 /* BoardView.xib */,
+			);
+			name = Xibs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D30D0A11D94596700322976 /* Assets.xcassets in Resources */,
+				4D91B8971D947FA900E2E4F1 /* BoardView.xib in Resources */,
 				4D30D0AD1D945A8200322976 /* MainView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,6 +174,7 @@
 				4D30D09C1D94596700322976 /* MainViewController.m in Sources */,
 				4D30D0991D94596700322976 /* AppDelegate.m in Sources */,
 				4D30D0961D94596700322976 /* main.m in Sources */,
+				4D91B89C1D94804800E2E4F1 /* BoardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +312,7 @@
 				4D30D0AA1D94596700322976 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

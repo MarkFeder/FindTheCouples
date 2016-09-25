@@ -72,12 +72,20 @@
     
     if (currentBoard.length && _boardController)
     {
-        // load BoardView
+        // Load BoardView
+        
+        // Get first char and convert it to int
+        unichar chr = [currentBoard characterAtIndex:0];
+        int cells = [[[NSString alloc] initWithCharacters:&chr  length:1] intValue];
+        
+        // Normally, NxN
+        _boardController.numberOfCells = cells * cells;
+        
         [self.navigationController pushViewController:_boardController animated:YES];
     }
     else
     {
-        // display error message to the user
+        // Display error message to the user
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error!"
                                                                        message:@"You have not selected a proper board"
                                                                 preferredStyle:UIAlertControllerStyleAlert];

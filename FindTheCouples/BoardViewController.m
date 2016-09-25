@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _selectedCouples = [[NSMutableArray alloc] initWithCapacity:2];
     
     // Initialize board
     self.board.delegate = self;
@@ -42,7 +43,7 @@
     
     CGFloat availableSize = boardSize.width;
     CGFloat minimumGutter = 2.0f;
-    CGFloat itemSize = self.numberOfCells > 50 ? 50.0f : 100.0f;
+    CGFloat itemSize = self.numberOfCells > 50 ? 50.0f : 80.0f;
     
     JBSpacer *spacer = [JBSpacer spacer];
     
@@ -104,6 +105,26 @@
     [self.board reloadData];
 }
 
+- (void)showAlert
+{
+    // Display error message to the user
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"That's not a couple!"
+                                                                   message:@"Try it again!"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                              // Reset info
+                                                              [_selectedCouples removeAllObjects];
+                                                              _counterLabel.text = [NSString stringWithFormat:@"%i",0];
+                                                              [self.board reloadData];
+                                                          }];
+    [alert addAction:defaultAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -113,16 +134,14 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"Cell";
-    
     UICollectionViewCell *cell = [collectionView
-                                  dequeueReusableCellWithReuseIdentifier:identifier
+                                  dequeueReusableCellWithReuseIdentifier:@"Cell"
                                   forIndexPath:indexPath];
     
-    // default background color
+    // Default background color
     cell.backgroundColor = [UIColor grayColor];
     
-    // selected background view when user selects cell
+    // Selected background view when user selects cell
     UIView *backgroundView = [[UIView alloc] init];
     backgroundView.backgroundColor = (UIColor *)[_colors objectAtIndex:indexPath.row];
     cell.selectedBackgroundView = backgroundView;
@@ -132,10 +151,30 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    UICollectionViewCell *currentCell = [collectionView cellForItemAtIndexPath:indexPath];
     
+    [_selectedCouples addObject:currentCell];
+    
+    if ([_selectedCouples count] == 2)
+    {
+        UICollectionViewCell *previousCell = (UICollectionViewCell *)[_selectedCouples objectAtIndex:0];
+        
+        if ([previousCell.selectedBackgroundView.backgroundColor isEqual:currentCell.selectedBackgroundView.backgroundColor])
+        {
+            int currentCounter = [_counterLabel.text intValue];
+            currentCounter++;
+            _counterLabel.text = [NSString stringWithFormat:@"%i", currentCounter];
+        }
+        else
+        {
+            [self showAlert];
+        }
+        
+        [_selectedCouples removeAllObjects];
+    }
 }
 
-#pragma mark - Back button
+#pragma mark - BackButton
 
 - (IBAction)performBack:(id)sender
 {

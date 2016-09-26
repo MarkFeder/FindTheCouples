@@ -28,16 +28,6 @@
     
     // Initialize board controller
     _boardController = [[BoardViewController alloc] initWithNibName:@"BoardView" bundle:nil];
-
-    // Initialize data
-    _boardPickerData = @[@"4x4"];
-    
-    // Connect data
-    self.boardPicker.dataSource = self;
-    self.boardPicker.delegate = self;
-    
-    // Initial row selected
-    [self.boardPicker selectRow:0 inComponent:0 animated:YES];
 }
 
 
@@ -46,37 +36,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-#pragma mark - PickerViewProtocol
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return _boardPickerData.count;
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return _boardPickerData[row];
-}
-
 # pragma mark - PlayButton
 
 - (IBAction)playGameAction:(id)sender
 {
-    NSString *currentBoard = [self.boardPicker.delegate pickerView:self.boardPicker titleForRow:[self.boardPicker selectedRowInComponent:0] forComponent:0];
+    NSString *boardOne = self.boardOneTextField.text;
+    NSString *boardTwo = self.boardTwoTextField.text;
     
-    if (currentBoard.length && _boardController)
+    if ((boardOne.length && boardTwo.length) && ([boardOne isEqualToString:boardTwo] && ([boardOne intValue] * [boardTwo intValue] % 2 == 0)) && _boardController)
     {
         // Load BoardView
-        
-        // Get first char and convert it to int
-        unichar chr = [currentBoard characterAtIndex:0];
-        int cells = [[[NSString alloc] initWithCharacters:&chr  length:1] intValue];
+        int cells = [boardOne intValue];
         
         // Normally, NxN
         _boardController.numberOfCells = cells * cells;
@@ -87,7 +57,7 @@
     {
         // Display error message to the user
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error!"
-                                                                       message:@"You have not selected a proper board"
+                                                                       message:@"You have not inserted a proper board"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault

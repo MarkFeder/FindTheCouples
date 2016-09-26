@@ -9,13 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BoardViewController.h"
 
-@interface MainViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
-{
-    NSArray *_boardPickerData;
-}
+@interface MainViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIPickerView *boardPicker;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UITextField *boardOneTextField;
+@property (weak, nonatomic) IBOutlet UITextField *boardTwoTextField;
 
 @end
 

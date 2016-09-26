@@ -45,22 +45,7 @@
     CGFloat minimumGutter = 2.0f;
     CGFloat itemSize = self.numberOfCells > 50 ? 50.0f : 80.0f;
     
-    JBSpacer *spacer = [JBSpacer spacer];
-    
-    BOOL success = [spacer findBestSpacingWithOptions:@[[JBSpacerOption optionWithItemSize:itemSize
-                                                                        minimumGutter:minimumGutter
-                                                                  gutterToMarginRatio:1.0f
-                                                                        availableSize:availableSize
-                                                             distributeExtraToMargins:YES]]];
-    if (success)
-    {
-        // Apply options to boardFlowLayout
-        [spacer applySpacingToCollectionViewFlowLayout:self.boardFlowLayout];
-
-        // Register cell
-        [self.board registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        [self.board setBackgroundColor:[UIColor redColor]];
-    }
+    [self setJBSpacerOptionsWithItemSize:itemSize size:availableSize gutter:minimumGutter];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +54,26 @@
 }
 
 #pragma mark - HelperMethods
+
+- (void)setJBSpacerOptionsWithItemSize:(CGFloat)itemSize size:(CGFloat)availableSize gutter:(CGFloat)minimumGutter
+{
+    JBSpacer *spacer = [JBSpacer spacer];
+    
+    BOOL success = [spacer findBestSpacingWithOptions:@[[JBSpacerOption optionWithItemSize:itemSize
+                                                                             minimumGutter:minimumGutter
+                                                                       gutterToMarginRatio:1.0f
+                                                                             availableSize:availableSize
+                                                                  distributeExtraToMargins:YES]]];
+    if (success)
+    {
+        // Apply options to boardFlowLayout
+        [spacer applySpacingToCollectionViewFlowLayout:self.boardFlowLayout];
+        
+        // Register cell
+        [self.board registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [self.board setBackgroundColor:[UIColor blackColor]];
+    }
+}
 
 - (void)randomizeColors
 {
@@ -103,6 +108,34 @@
 {
     [self shuffleBoardData];
     [self.board reloadData];
+}
+
+- (void)repeateAgainOrNot
+{
+    // Display error message to the user
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Game end!"
+                                                                   message:@"You have found all the couples!"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* playAgainAction = [UIAlertAction actionWithTitle:@"Play again" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                              // Reset info
+                                                              [_selectedCouples removeAllObjects];
+                                                              _counterLabel.text = [NSString stringWithFormat:@"%i",0];
+                                                              [self shuffleBoardDataAndReload];
+                                                          }];
+    
+    UIAlertAction* returnToMenuAction = [UIAlertAction actionWithTitle:@"Return to main menu" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                              // Return to main menu
+                                                              [self performBack:nil];
+                                                          }];
+    [alert addAction:playAgainAction];
+    [alert addAction:returnToMenuAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showAlert
@@ -161,9 +194,13 @@
         
         if ([previousCell.selectedBackgroundView.backgroundColor isEqual:currentCell.selectedBackgroundView.backgroundColor])
         {
-            int currentCounter = [_counterLabel.text intValue];
-            currentCounter++;
+            int currentCounter = [_counterLabel.text intValue]; currentCounter++;
             _counterLabel.text = [NSString stringWithFormat:@"%i", currentCounter];
+            
+            if (currentCounter >= _numberOfCouples)
+            {
+                [self repeateAgainOrNot];
+            }
         }
         else
         {

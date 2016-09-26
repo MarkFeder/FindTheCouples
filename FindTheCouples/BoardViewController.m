@@ -26,7 +26,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _selectedCouples = [[NSMutableArray alloc] initWithCapacity:2];
-    
+    _colors = [[NSMutableArray alloc] init];
+
     // Initialize board
     self.board.delegate = self;
     self.board.dataSource = self;
@@ -77,7 +78,7 @@
 
 - (void)randomizeColors
 {
-    _colors = [[NSMutableArray alloc] init];
+    [_colors removeAllObjects];
     
     for (int i = 0; i < _numberOfCouples; i++)
     {
@@ -160,6 +161,11 @@
 
 #pragma mark - UICollectionViewDataSource
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.numberOfCells;
@@ -171,13 +177,20 @@
                                   dequeueReusableCellWithReuseIdentifier:@"Cell"
                                   forIndexPath:indexPath];
     
-    // Default background color
-    cell.backgroundColor = [UIColor grayColor];
     
-    // Selected background view when user selects cell
-    UIView *backgroundView = [[UIView alloc] init];
-    backgroundView.backgroundColor = (UIColor *)[_colors objectAtIndex:indexPath.row];
-    cell.selectedBackgroundView = backgroundView;
+    @try
+    {
+        // Default background color
+        cell.backgroundColor = [UIColor grayColor];
+        
+        // Selected background view when user selects cell
+        UIView *backgroundView = [[UIView alloc] init];
+        backgroundView.backgroundColor = (UIColor *)[_colors objectAtIndex:indexPath.row];
+        cell.selectedBackgroundView = backgroundView;
+
+    }@catch (NSException *exception) {
+        NSLog(@"%@", [exception userInfo]);
+    }
 
     return cell;
 }

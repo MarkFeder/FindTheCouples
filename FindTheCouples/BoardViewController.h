@@ -10,16 +10,20 @@
 
 @interface BoardViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 {
+    
+#pragma mark - Instance variables
+    
     NSMutableArray *_colors;
     NSMutableArray *_selectedCouples;
     int _numberOfCouples;
 }
 
+#pragma mark - Properties
+
 @property (strong, nonatomic) IBOutlet UICollectionView *board;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (strong, nonatomic) IBOutlet UILabel *counterLabel;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *boardFlowLayout;
-
 @property (assign) int numberOfCells;
 
 @end

@@ -11,6 +11,8 @@
 
 @interface MainViewController : UIViewController
 
+#pragma mark - Properties
+
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UITextField *boardOneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *boardTwoTextField;

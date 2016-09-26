@@ -25,9 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
-    // Initialize board controller
-    _boardController = [[BoardViewController alloc] initWithNibName:@"BoardView" bundle:nil];
 }
 
 
@@ -43,10 +40,13 @@
     NSString *boardOne = self.boardOneTextField.text;
     NSString *boardTwo = self.boardTwoTextField.text;
     
-    if ((boardOne.length && boardTwo.length) && ([boardOne isEqualToString:boardTwo] && ([boardOne intValue] * [boardTwo intValue] % 2 == 0)) && _boardController)
+    if ((boardOne.length && boardTwo.length) && ([boardOne isEqualToString:boardTwo] && ([boardOne intValue] * [boardTwo intValue] % 2 == 0)))
     {
         // Load BoardView
         int cells = [boardOne intValue];
+        
+        // Initialize board controller
+        _boardController = [[BoardViewController alloc] initWithNibName:@"BoardView" bundle:nil];
         
         // Normally, NxN
         _boardController.numberOfCells = cells * cells;

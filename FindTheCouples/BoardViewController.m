@@ -19,14 +19,17 @@
 {
     [super viewWillAppear:animated];
     
-    [self shuffleBoardDataAndReload];
+    [_board reloadData];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _selectedCouples = [[NSMutableArray alloc] initWithCapacity:2];
     _colors = [[NSMutableArray alloc] init];
+    
+    _numberOfCouples = _numberOfCells / 2;
 
     // Initialize board
     self.board.delegate = self;
@@ -35,7 +38,6 @@
     self.board.allowsMultipleSelection = YES;
     
     // Set colors and data
-    _numberOfCouples = _numberOfCells / 2;
     [self randomizeColors];
     [self shuffleBoardData];
     
@@ -176,7 +178,6 @@
     UICollectionViewCell *cell = [collectionView
                                   dequeueReusableCellWithReuseIdentifier:@"Cell"
                                   forIndexPath:indexPath];
-    
     
     @try
     {
